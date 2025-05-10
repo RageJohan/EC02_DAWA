@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editar Orden de Compra - FarmaciaApp</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #3498db;
+      --accent-color: #2ecc71;
+      --dark-color: #2c3e50;
+    }
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .navbar {
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .navbar-brand {
+      font-weight: bold;
+      color: var(--primary-color) !important;
+    }
+    .form-container {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      padding: 2rem;
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+    }
+    .page-title {
+      color: var(--dark-color);
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid var(--primary-color);
+      padding-bottom: 0.5rem;
+    }
+    .form-label {
+      font-weight: 500;
+      color: var(--dark-color);
+    }
+    .form-control, .form-select {
+      border-radius: 8px;
+      padding: 10px 15px;
+      border: 1px solid #ddd;
+      transition: all 0.3s ease;
+    }
+    .form-control:focus, .form-select:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+    }
+    .btn {
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+    .btn-primary {
+      background-color: var(--primary-color);
+      border-color: var(--primary-color);
+    }
+    .btn-primary:hover {
+      background-color: #2980b9;
+      border-color: #2980b9;
+      transform: translateY(-2px);
+    }
+    .btn-secondary:hover {
+      transform: translateY(-2px);
+    }
+    .footer {
+      background-color: var(--dark-color);
+      color: white;
+      padding: 1rem 0;
+      margin-top: 2rem;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+    .input-group-text {
+      background-color: #f8f9fa;
+      border-right: none;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+      <i class="fas fa-clinic-medical me-2"></i>FarmaciaApp
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="/laboratorios?token=<%= token %>">
+            <i class="fas fa-flask me-1"></i> Laboratorios
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="/ordenes?token=<%= token %>">
+            <i class="fas fa-shopping-cart me-1"></i> Órdenes de Compra
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="form-container">
+    <h2 class="page-title">
+      <i class="fas fa-edit me-2"></i>Editar Orden de Compra
+    </h2>
+    
+    <form method="POST" action="/ordenes/edit/<%= orden.id %>?token=<%= token %>">
+      <input type="hidden" name="token" value="<%= token %>">
+      
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="fechaEmision" class="form-label">Fecha de Emisión</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+            <input type="date" id="fechaEmision" name="fechaEmision" class="form-control" value="<%= orden.fechaEmision.toISOString().split('T')[0] %>" required>
+          </div>
+        </div>
+        
+        <div class="col-md-6 mb-3">
+          <label for="Situacion" class="form-label">Situación</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fas fa-info-circle"></i></span>
+            <input type="text" id="Situacion" name="Situacion" class="form-control" value="<%= orden.Situacion %>" required>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="Total" class="form-label">Total</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
+            <input type="number" step="0.01" id="Total" name="Total" class="form-control" value="<%= orden.Total %>" required>
+          </div>
+        </div>
+        
+        <div class="col-md-6 mb-3">
+          <label for="NrofacturaProv" class="form-label">Nro. Factura Proveedor</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fas fa-receipt"></i></span>
+            <input type="text" id="NrofacturaProv" name="NrofacturaProv" class="form-control" value="<%= orden.NrofacturaProv %>" required>
+          </div>
+        </div>
+      </div>
+      
+      <div class="mb-4">
+        <label for="CodLab" class="form-label">Laboratorio</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="fas fa-flask"></i></span>
+          <select id="CodLab" name="CodLab" class="form-select" required>
+            <% laboratorios.forEach(lab => { %>
+              <option value="<%= lab.id %>" <%= orden.CodLab === lab.id ? 'selected' : '' %>><%= lab.razonSocial %></option>
+            <% }) %>
+          </select>
+        </div>
+      </div>
+      
+      <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary">
+          <i class="fas fa-save me-1"></i> Guardar
+        </button>
+        <a href="/ordenes?token=<%= token %>" class="btn btn-secondary">
+          <i class="fas fa-times me-1"></i> Cancelar
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p class="mb-0">© 2023 FarmaciaApp - Sistema de Gestión de Farmacia</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

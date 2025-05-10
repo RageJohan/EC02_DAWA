@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FarmaciaApp</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #3498db;
+      --accent-color: #2ecc71;
+      --dark-color: #2c3e50;
+    }
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .navbar {
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .navbar-brand {
+      font-weight: bold;
+      color: var(--primary-color) !important;
+    }
+    .nav-link {
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+    .nav-link:hover {
+      color: var(--accent-color) !important;
+      transform: translateY(-2px);
+    }
+    .main-container {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      padding: 2rem;
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+    }
+    .page-title {
+      color: var(--dark-color);
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid var(--primary-color);
+      padding-bottom: 0.5rem;
+    }
+    .logout-btn {
+      border-radius: 20px;
+      padding: 0.25rem 1rem;
+    }
+    .footer {
+      background-color: var(--dark-color);
+      color: white;
+      padding: 1rem 0;
+      margin-top: 2rem;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+      <i class="fas fa-clinic-medical me-2"></i>FarmaciaApp
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="/laboratorios?token=<%= token %>">
+            <i class="fas fa-flask me-1"></i> Laboratorios
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/ordenes?token=<%= token %>">
+            <i class="fas fa-shopping-cart me-1"></i> Órdenes de Compra
+          </a>
+        </li>
+      </ul>
+      <div class="d-flex align-items-center">
+        <span class="navbar-text text-white me-3">
+          <i class="fas fa-user-circle me-1"></i> 
+          Bienvenido, <strong><%= nombre %></strong> | Rol: <span class="badge bg-info"><%= rol %></span>
+        </span>
+        <a class="btn btn-sm btn-outline-danger logout-btn" href="/auth/logout">
+          <i class="fas fa-sign-out-alt me-1"></i> Cerrar sesión
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="container main-container">
