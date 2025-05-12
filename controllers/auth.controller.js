@@ -3,7 +3,6 @@ const Usuario = db.Usuario;
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
-// REGISTRO
 exports.register = async (req, res) => {
   try {
     const { nombre, email, password } = req.body;
@@ -23,8 +22,6 @@ exports.register = async (req, res) => {
   }
 };
 
-// LOGIN
-// 🔁 Login vía formulario: redirige al menú
 exports.loginWeb = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -47,7 +44,6 @@ exports.loginWeb = async (req, res) => {
   }
 };
 
-// 🔁 Login vía Postman/API: devuelve token en JSON
 exports.loginApi = async (req, res) => {
   try {
     const { email, password } = req.body;

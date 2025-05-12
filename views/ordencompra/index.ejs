@@ -145,11 +145,13 @@
       <h2 class="page-title mb-0">
         <i class="fas fa-file-invoice me-2"></i>Órdenes de Compra
       </h2>
-      <a href="/ordenes/create?token=<%= token %>" class="btn btn-success">
-        <i class="fas fa-plus me-1"></i> Nueva Orden
-      </a>
+      <% if (rol === 'admin' || rol === 'moderador') { %>
+        <a href="/ordenes/create?token=<%= token %>" class="btn btn-success">
+          <i class="fas fa-plus me-1"></i> Nueva Orden
+        </a>
+      <% } %>
     </div>
-    
+
     <% if (ordenes && ordenes.length > 0) { %>
       <div class="table-responsive">
         <table class="table table-hover">
@@ -160,7 +162,9 @@
               <th><i class="fas fa-dollar-sign me-1"></i> Total</th>
               <th><i class="fas fa-receipt me-1"></i> Factura Proveedor</th>
               <th><i class="fas fa-flask me-1"></i> Laboratorio</th>
-              <th><i class="fas fa-cogs me-1"></i> Acciones</th>
+              <% if (rol !== 'usuario') { %>
+                <th><i class="fas fa-cogs me-1"></i> Acciones</th>
+              <% } %>
             </tr>
           </thead>
           <tbody>
@@ -185,19 +189,25 @@
                 <td class="total-amount">S/ <%= parseFloat(orden.Total).toFixed(2) %></td>
                 <td><%= orden.NrofacturaProv %></td>
                 <td><%= orden.Laboratorio.razonSocial %></td>
-                <td>
-                  <div class="action-buttons">
-                    <a href="/ordenes/edit/<%= orden.id %>?token=<%= token %>" class="btn btn-warning btn-sm">
-                      <i class="fas fa-edit"></i> Editar
-                    </a>
-                    <form action="/ordenes/delete/<%= orden.id %>?token=<%= token %>" method="POST" onsubmit="return confirm('¿Está seguro de eliminar esta orden de compra?')">
-                      <input type="hidden" name="token" value="<%= token %>">
-                      <button class="btn btn-danger btn-sm">
-                        <i class="fas fa-trash"></i> Eliminar
-                      </button>
-                    </form>
-                  </div>
-                </td>
+                <% if (rol !== 'usuario') { %>
+                  <td>
+                    <div class="action-buttons">
+                      <% if (rol === 'admin' || rol === 'moderador') { %>
+                        <a href="/ordenes/edit/<%= orden.id %>?token=<%= token %>" class="btn btn-warning btn-sm">
+                          <i class="fas fa-edit"></i> Editar
+                        </a>
+                      <% } %>
+                      <% if (rol === 'admin') { %>
+                        <form action="/ordenes/delete/<%= orden.id %>?token=<%= token %>" method="POST" onsubmit="return confirm('¿Está seguro de eliminar esta orden de compra?')">
+                          <input type="hidden" name="token" value="<%= token %>">
+                          <button class="btn btn-danger btn-sm">
+                            <i class="fas fa-trash"></i> Eliminar
+                          </button>
+                        </form>
+                      <% } %>
+                    </div>
+                  </td>
+                <% } %>
               </tr>
             <% }) %>
           </tbody>

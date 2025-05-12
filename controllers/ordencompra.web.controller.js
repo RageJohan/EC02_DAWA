@@ -5,7 +5,8 @@ const Laboratorio = db.Laboratorio;
 exports.index = async (req, res) => {
   const ordenes = await db.OrdenCompra.findAll({ include: db.Laboratorio });
   const token = req.query.token;
-  res.render("ordencompra/index", { ordenes, token });
+  const rol = req.rol; // ← necesario para controlar la vista
+  res.render("ordencompra/index", { ordenes, token, rol });
 };
 
 exports.showCreate = async (req, res) => {

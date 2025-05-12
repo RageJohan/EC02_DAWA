@@ -4,7 +4,8 @@ const Laboratorio = db.Laboratorio;
 exports.list = async (req, res) => {
   const laboratorios = await Laboratorio.findAll();
   const token = req.query.token; // ✅ extraer token del query
-  res.render("laboratorio/index", { laboratorios, token }); // ✅ pasar a la vista
+  const rol = req.rol;
+  res.render("laboratorio/index", { laboratorios, token, rol }); // ✅ pasar a la vista
 };
 
 
